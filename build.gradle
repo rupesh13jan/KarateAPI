@@ -1,0 +1,54 @@
+def cucumberVersion = "1.1.23"
+def serenityVersion = "1.2.2"
+
+repositories {
+	mavenLocal()
+	jcenter()
+}
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	
+	dependencies {
+		def serenityVersion = "1.2.2"
+		classpath ("net.serenity-bdd:serenity-gradle-plugin:$serenityVersion")
+	}
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	testCompile ("net.serenity-bdd:serenity-core:$serenityVersion")
+	compile "net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}"
+	testCompile ("net.serenity-bdd:serenity-cucumber:$cucumberVersion")
+	testCompile ("net.serenity-bdd:serenity-junit:$serenityVersion")
+	compile("net.serenity-bdd:serenity-rest-assured:$serenityVersion")
+	compile group: 'io.rest-assured', name: 'rest-assured', version: '3.1.0'
+	compile 'io.rest-assured:json-path:3.1.0'
+ 	compile 'io.rest-assured:xml-path:3.1.0'
+  	testCompile 'io.rest-assured:rest-assured:3.1.0'
+
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.assertj:assertj-core:1.7.0'
+	testCompile 'org.slf4j:slf4j-simple:1.7.7'
+	testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.5.0'
+	testCompile 'com.intuit.karate:karate-junit4:0.9.2'
+    testCompile 'com.intuit.karate:karate-netty:0.9.2'
+    testCompile 'net.masterthought:cucumber-reporting:4.10.0'
+	
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
+gradle.startParameter.continueOnFailure = true

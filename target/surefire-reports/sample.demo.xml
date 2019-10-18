@@ -1,0 +1,21 @@
+<testsuite failures="0" name="sample/demo.feature" skipped="0" tests="1" time="2.888889">
+  <testcase classname="sample.demo" name="payment ID fetch" time="2.888889">
+    <system-out>Given url 'http://onlinebookstorecognizant.us-east-2.elasticbeanstalk.com/addToCart' . passed
+* def json1 = ............................................................. passed
+And request json1 ......................................................... passed
+When method POST .......................................................... passed
+Then status 202 ........................................................... passed
+And match response.OrderID[*].paymentStatus contains ["NotStarted"] ....... passed
+* def partNumbers = karate.jsonPath(response,"$..paymentStatus") .......... passed
+* def payID = karate.jsonPath(response,"$..paymentID") .................... passed
+* print 'Payment Id:', payID[0] ........................................... passed
+* print 'The Request1 is ',json1 .......................................... passed
+* print 'Response1 is: ',response ......................................... passed
+* print 'Response is: ',partNumbers ....................................... passed
+Given url 'http://onlinebookstorecognizant.us-east-2.elasticbeanstalk.com/buynow' . passed
+And request { "user_id": 1, "book_id": 1, "paymentid":'#(payID[0])'} ...... passed
+When method POST .......................................................... passed
+Then status 202 ........................................................... passed
+* print 'The second response is: ' ,response .............................. passed</system-out>
+  </testcase>
+</testsuite>
